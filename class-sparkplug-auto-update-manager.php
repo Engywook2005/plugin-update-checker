@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once 'plugin-update-checker.php';
 
-class SparkPlug_Auto_Update_Manager {
+class Auto_Update_Manager {
 	private $bitbucketBaseUrl = 'https://bitbucket.org/bitbucket_user_name/';
 
 	private $bitbucketConsumerKey = 'key_here';

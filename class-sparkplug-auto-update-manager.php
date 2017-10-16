@@ -95,7 +95,7 @@ class Auto_Update_Manager {
 	}
 
 	public function enableAutoUpdatesForPlugins($update, $item){
-		$GLOBALS['logFunction']("trying to do an update");
+		sp_log("attempting an automatic update");
 		if( array_key_exists( $item->slug, $this->updaters )) {
 			return true;
 		}

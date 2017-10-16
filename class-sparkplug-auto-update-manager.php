@@ -80,11 +80,18 @@ class Auto_Update_Manager {
 		}
 		*/
 		//@TODO REMOVE NEXT 2 LINES!!!!
+		//$timePluginsLastUpdated = get_option("_site_transient_update_plugins['sparkplug-wp-api/sparkplug-wp-api.php']");
+		//var_dump_error_log($timePluginsLastUpdated);
+		//sp_log("Plugins were last updated at $timePluginsLastUpdated");
 		sp_log("checking on auto update: $enableAutoUpdates");
 		add_filter('puc_check_now-sparkplug_wp_api', array($this, 'alwaysCheckOnCron'), 10, 3);
+		//all this does is **enable** auto updates, it does not cause the autoupdate to happen on the spot
+		//wp makes that call if it's been at least 12 hours since the last update
 		if( $enableAutoUpdates ){
 			add_filter( 'auto_update_plugin', [$this, 'enableAutoUpdatesForPlugins'], 10, 2 );
 		}
+		// this of course does not work
+		//wp_maybe_auto_update();
 
 	}
 

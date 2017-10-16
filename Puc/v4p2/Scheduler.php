@@ -90,6 +90,7 @@ if ( !class_exists('Puc_v4p2_Scheduler', false) ):
 		 * This method is declared public because it's a hook callback. Calling it directly is not recommended.
 		 */
 		public function maybeCheckForUpdates(){
+
 			if ( empty($this->checkPeriod) ){
 				return;
 			}

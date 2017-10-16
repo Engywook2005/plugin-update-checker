@@ -6,6 +6,8 @@
  * Time: 1:23 PM
  */
 
+//@TODO remove all references to sp_log
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -29,10 +31,7 @@ class Auto_Update_Manager {
 	private $masterPluginFILE;
 	private $masterPluginSlug;
 
-	public function __construct($enableAutoUpdates = false, $metaDataURL, $fullPath, $pluginSlug, $interval, $logFunction = null) {
-		if($logFunction) {
-			$this -> setLogFunction($logFunction);
-		}
+	public function __construct($enableAutoUpdates = false, $metaDataURL, $fullPath, $pluginSlug, $interval) {
 
 		$GLOBALS['logFunction']('hidey ho');
 
@@ -80,11 +79,19 @@ class Auto_Update_Manager {
 			$updater->setBranch( $this->stableBranchName );
 		}
 		*/
-		$GLOBALS['logFunction']("checking on auto update: $enableAutoUpdates");
+		//@TODO REMOVE NEXT 2 LINES!!!!
+		sp_log("checking on auto update: $enableAutoUpdates");
+		add_filter('puc_check_now-sparkplug_wp_api', array($this, 'alwaysCheckOnCron'), 10, 3);
 		if( $enableAutoUpdates ){
 			add_filter( 'auto_update_plugin', [$this, 'enableAutoUpdatesForPlugins'], 10, 2 );
 		}
 
+	}
+
+	public function alwaysCheckOnCron($currentDecision, $lastTimeChecked, $interval) {
+		$timeSinceLastCheck = time() - $lastTimeChecked;
+		sp_log("the currentDecision is $currentDecision. Last time checked is $lastTimeChecked, which is $timeSinceLastCheck seconds ago.");
+		return true;
 	}
 
 	public function enableAutoUpdatesForPlugins($update, $item){
